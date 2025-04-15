@@ -1,0 +1,34 @@
+name: Linear Obsidian Build
+run-name: ${{ github.actor }} is running.
+on:
+    push:
+        branches:
+            - main
+jobs: 
+    release-draft:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@main
+            - uses: actions/setup-node@v4
+            - run: npm ci
+            - run: npm run build
+            - name: Clean Up
+              run: |
+                rm -rf node_modules src .github
+                rm .gitignore .editorconfig .eslintignore .eslintrc .npmrc esbuild.config.mjs package-lock.json package.json tsconfig.json types.d.ts version-bump.mjs
+            - name: Create Artifact
+              run: |
+                zip -r linear-obsidian-plugin.zip .
+            - name: File List
+              run: |
+                ls ./
+            - name: Release Draft
+              uses: ncipollo/release-action@v1
+              with:
+                allowUpdates: true
+                artifacts: ./linear-obsidian-plugin.zip
+                draft: true
+                name: "Draft Release"
+                replacesArtifacts: true
+                token: "${{ secrets.TOKEN }}"
+                tag: "0.0.0"

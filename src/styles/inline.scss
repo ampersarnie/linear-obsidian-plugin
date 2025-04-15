@@ -1,0 +1,22 @@
+.linear-plugin--inline {
+    display: inline-block;
+    background-color: var(--background-secondary);
+    border-radius: 5px;
+    border: 1px solid var(--background-modifier-border);
+    padding: 0 10px;
+    margin: 0 5px;
+
+    &:hover {
+        border-color: var(--background-modifier-border-hover);
+        cursor: pointer;
+    }
+
+    .grid-item {
+        display: inline-block;
+    }
+
+    .linear-plugin--issue__id,
+    .linear-plugin--issue__title {
+        padding-right: 10px;
+    }
+}

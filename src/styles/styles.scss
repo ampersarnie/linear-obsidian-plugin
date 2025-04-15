@@ -1,0 +1,40 @@
+.view-content {
+    container-type: inline-size;
+}
+
+.linear-plugin--error {
+    background-color: var(--color-red);
+    padding: 5px 10px;
+}
+
+.linear-plugin--issue__id {
+    color: var(--color-base-50);
+    font-size: var(--font-smallest);
+}
+
+.linear-plugin--issue__status {
+    font-size: var(--font-smallest);
+    color: var(--status-text-color);
+
+    svg .status-pill {
+        fill: var(--status-background-color);
+    }
+
+    .status-text {
+        padding-left: 5px;
+    }
+}
+
+.linear-plugin--issue__assignee {
+    color: var(--color-base-50);
+    font-size: var(--font-smallest);
+    
+    svg,
+    .assignee-text {
+        float: inline-start;
+    }
+
+    .assignee-text {
+        padding-left: 5px;
+    }
+}
