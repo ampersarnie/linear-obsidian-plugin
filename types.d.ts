@@ -1,4 +1,6 @@
 import { type MarkdownFileInfo } from "obsidian";
+import { PluginValue } from '@codemirror/view';
+import LinearPlugin from "main";
 
 type CommonProps = {
     children?: any;
@@ -28,4 +30,9 @@ interface DOMRootNodes {
 
 interface FileData extends MarkdownFileInfo {
   data: string | null;
+}
+
+interface WidgetSpec extends PluginValue {
+  Plugin: LinearPlugin;
+  Cache: Cache;
 }

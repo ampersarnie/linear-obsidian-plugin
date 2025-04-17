@@ -1,19 +1,13 @@
-import IssueCache from "IssueCache";
-import LinearAPI from "LinearAPI";
-import { IssueNode } from "../../types";
+import LinearAPI from "Linear/LinearAPI";
 
 export default async (
     app: any,
-    Cache: IssueCache,
-    Linear: LinearAPI,
-    rehydrate = false
+    Linear: LinearAPI
 ) => {
     const { data = null } = app.workspace?.activeEditor || {};
-
-    console.log(app)
     
     if (!data) {
-        return;
+        return [];
     }
 
     const issueList: string[] = [];
@@ -23,20 +17,8 @@ export default async (
     for(let i in docIssues) {
         let { ident } = docIssues[i]?.groups;
 
-        if (Cache.exists(ident) && !rehydrate) {
-            continue;
-        }
-
         issueList.push(ident);
     }
-    
-    if (issueList.length <= 0) {
-        return;
-    }
 
-    const response = await Linear.issuesFromIdentifiers(issueList);
-
-    response?.data.issues.nodes.forEach((node: IssueNode) => {
-        Cache.add(node?.identifier, node);
-    });
+    await Linear.issuesFromIdentifiers(issueList);
 };

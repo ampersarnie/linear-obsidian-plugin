@@ -27,7 +27,9 @@
 		"@codemirror/language": "^6.11.0",
 		"@linear/sdk": "^39.0.0",
 		"classnames": "^2.5.1",
+		"electron-store": "^10.0.1",
 		"esbuild-sass-plugin": "^3.3.1",
+		"idb": "^7.1.1",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0"
 	}

@@ -1,6 +1,6 @@
 import LinearPlugin from "main";
 import { ObsidianProtocolData, request } from "obsidian";
-import LinearAPI from "LinearAPI";
+import LinearAPI from "Linear/LinearAPI";
 
 export default (Plugin: LinearPlugin) => async ({
     code, 

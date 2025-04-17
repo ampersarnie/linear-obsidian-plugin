@@ -1,4 +1,8 @@
 import { LinearClient, type LinearRawResponse } from "@linear/sdk";
+import IssueCache from "./IssueCache";
+interface IssueInterface {
+    [key: string]: any;
+}
 
 type IssueList = {
     teams: string[];
@@ -16,6 +20,7 @@ export type IdentifierRegexMatch = RegExpMatchArray & {
 
 export default class LinearAPI {
     protected linear: LinearClient;
+    protected cache: IssueCache;
 
     protected nodeList = `
         id,
@@ -38,6 +43,7 @@ export default class LinearAPI {
 
     constructor(accessToken: string) {
         this.linear = new LinearClient({ accessToken: accessToken })
+        this.cache = new IssueCache();
     }
 
     createTeamAndNumberList(identifiers: string[]): IssueList {
@@ -58,7 +64,28 @@ export default class LinearAPI {
     }
 
     async issuesFromIdentifiers(identifiers: string[]) {
-        const { teams, numbers } = this.createTeamAndNumberList(identifiers);
+        const issues: IssueInterface = {};
+        const retrieve = [];
+
+        for(let i in identifiers) {
+            const identifier = identifiers[i];
+
+            console.log()
+
+            if (!await this.cache.exists(identifier)) {
+                retrieve.push(identifier);
+                continue;
+            };
+
+            const issue = this.cache.get(identifier);
+            issues[identifier] = issue;
+        }
+
+        if (retrieve.length <= 0) {
+            return issues;
+        }
+
+        const { teams, numbers } = this.createTeamAndNumberList(retrieve);
 
         const response: LinearRawResponse<any> = await this.linear.client.rawRequest(`
             query issues($filter: IssueFilter) {
@@ -71,7 +98,7 @@ export default class LinearAPI {
                 filter: {
                     team: {
                         key: {
-                        in: teams
+                            in: teams
                         }
                     },
                     number: {
@@ -81,6 +108,18 @@ export default class LinearAPI {
             },
         );
 
-        return response;
+        const nodes = response?.data?.issues?.nodes;
+
+        if (!nodes) {
+            return issues;
+        }
+
+        for(const i in nodes) {
+            const node = nodes[i];
+            this.cache.add(node.identifier, node);
+            issues[node.identifier] = node;
+        }
+
+        return issues;
     }
 }

@@ -38,3 +38,15 @@
         padding-left: 5px;
     }
 }
+
+.cm-linear[data-linear-inline="true"] {
+    display: inline-block;
+}
+
+.linear-code-element {
+    display: none;
+}
+
+.cm-active .linear-code-element {
+    display: inherit;
+}
