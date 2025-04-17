@@ -6,7 +6,7 @@ import LinearAPI from "Linear/LinearAPI";
 import BlockDecoration from "Decorators/BlockDecoration";
 import TextDecoration from "Decorators/TextDecoration";
 
-import protocolHandler from "protocolHandler";
+import LinearAuthentication from "ProtocolHandlers/LinearAuthentication";
 import markdownPostProcessor from "PostProcessors/markdownPostProcessor";
 import { DEFAULT_SETTINGS, PluginSettings, S_IN_MS } from "Utils/constants";
 import cacheIssues from "Utils/cacheIssues"
@@ -40,7 +40,7 @@ export default class LinearPlugin extends Plugin {
 			await cacheIssues(this.app, this.Linear);
 	  	});
 
-		this.registerObsidianProtocolHandler('linear-obsidian', protocolHandler(this));
+		this.registerObsidianProtocolHandler('linear-obsidian', LinearAuthentication(this));
 
 		BlockDecoration.Plugin = this;
 
