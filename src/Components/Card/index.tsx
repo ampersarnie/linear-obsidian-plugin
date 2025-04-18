@@ -39,7 +39,7 @@ export default ({plugin, identifier}: Props) => {
             <Status name={issue.state.name} color={issue.state.color} className="grid-item" />
             <Id className="grid-item">{issue?.identifier}</Id>
             <Title className="grid-item">{issue?.title}</Title>
-            <Assignee className="grid-item" name={issue.assignee.name} avatarUrl={issue.assignee.avatarUrl} />
+            <Assignee className="grid-item" name={issue.assignee?.name} avatarUrl={issue.assignee?.avatarUrl} />
         </div>
     );
 }
