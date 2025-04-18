@@ -38,25 +38,28 @@ export default class TextDecoration implements PluginValue {
                         return;
                     }
 
+                    const eol = view.state.sliceDoc(node.from, node.to + 1);
+
+					// Fix issue where last character triggers next() infinite loop
+                    // where `[` is the last chacter of a line.
+                    if (eol.trimEnd() === '[') {
+                        return;
+                    }
+
                     let startingPos = node.from;
 
                     // @ts-expect-error
                     node.next();
 
-                    const issue = view.state.sliceDoc(node.from, node.to);
+                    const issue = view.state.sliceDoc(node.from - 1, node.to + 1);
 
-                    if (!/[A-Za-z]{1,7}-[0-9]{1,7}/.test(issue)) {
+                    if (!/\[[A-Za-z]{1,7}-[0-9]{1,7}\]/.test(issue)) {
 						// @ts-expect-error
 						node.prev();
                         return;
                     }
-                    
-                    // @ts-expect-error
-                    node.next();
-                    const ender = view.state.sliceDoc(node.from, node.to);
-                    if (ender === ']') {
-						ranges.push({ from: startingPos, to: node.to });
-					}
+
+					ranges.push({ from: startingPos, to: node.to + 1 });
 				},
 			});
 		}

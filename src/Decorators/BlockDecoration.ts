@@ -85,35 +85,38 @@ export default class BlockDecoration implements PluginValue {
                         return;
                     }
 
+                    const eol = view.state.sliceDoc(node.from, node.to + 1);
+
+                    // Fix issue where last character triggers next() infinite loop.
+                    if (eol.trimEnd() === '[') {
+                        return;
+                    }
+
                     let startingPos = node.from;
 
                     // @ts-expect-error
                     node.next();
 
-                    const issue = view.state.sliceDoc(node.from, node.to);
+                    const issueMarkup = view.state.sliceDoc(node.from - 1, node.to + 1);
+                    const issue = issueMarkup.match(/\[([A-Za-z]{1,7}-[0-9]{1,7})\]/);
 
-                    if (!/[A-Za-z]{1,7}-[0-9]{1,7}/.test(issue)) {
-                        // @ts-expect-error
-                        node.prev();
+                    if (!/\[[A-Za-z]{1,7}-[0-9]{1,7}\]/.test(issueMarkup) || !issue?.[1]) {
+						// @ts-expect-error
+						node.prev();
                         return;
                     }
-                    
-                    // @ts-expect-error
-                    node.next();
-                    const ender = view.state.sliceDoc(node.from, node.to);
-                    if (ender === ']') {
-                        const inline = !isOnlyStringOnLine(view, node.from, issue);
-                        let deco = Decoration.widget({
-                            widget: new StartWidget(
-                                issue,
-                                inline,
-                                BlockDecoration.Plugin,
-                            ),
-                            side: 1
-                        });
 
-                        widgets.push(deco.range(startingPos));
-                    }
+                    const inline = !isOnlyStringOnLine(view, node.from, issue[1]);
+                    let deco = Decoration.widget({
+                        widget: new StartWidget(
+                            issue[1],
+                            inline,
+                            BlockDecoration.Plugin,
+                        ),
+                        side: 1
+                    });
+
+                     widgets.push(deco.range(startingPos));
                 },
 			});
 		}
