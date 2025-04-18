@@ -34,7 +34,7 @@ export default ({plugin, identifier}: Props) => {
     }
 
     return (
-        <div className="linear-plugin--inline" data-issue-state={issue.state.type}>
+        <div className="linear-plugin--inline" data-issue-state={issue.state.type} onClick={() => window.open(issue.url)}>
             <Id className="grid-item">{issue?.identifier}</Id>
             <Title className="grid-item">{issue?.title}</Title>
             <Status name={issue.state.name} color={issue.state.color} className="grid-item" />
