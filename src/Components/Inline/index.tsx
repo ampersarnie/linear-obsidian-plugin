@@ -1,11 +1,11 @@
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import LinearPlugin from "main";
 import Title from "../Title";
 import Id from "../Id";
 import Status from "../Status";
-import Assignee from "../Assignee";
 
 import "../../styles/inline.scss";
+import { IssueSchema } from "../../../types";
 
 type Props = {
     plugin: LinearPlugin;
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export default ({plugin, identifier}: Props) => {
-    const [issue, setIssue] = useState(null);
+    const [issue, setIssue] = useState<IssueSchema|null>(null);
 
     useEffect(() => {
         plugin.Linear.issuesFromIdentifiers([identifier]).then(async (issues) => {

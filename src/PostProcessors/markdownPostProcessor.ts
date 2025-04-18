@@ -7,11 +7,12 @@ import findElementByText from "Utils/findElementByText";
 import LinearPlugin from "main";
 import waitFor from "Utils/waitFor";
 
-const mountIssue = async (Plugin:LinearPlugin, el: HTMLElement | null, identifiers: string[]) => {
+const mountIssue = async (Plugin:LinearPlugin, el: HTMLInputElement | null, identifiers: string[]) => {
 	if (!el) {
 		return;
 	}
 
+	// @ts-expect-error
 	let html = el.getHTML();
 
 	for(let identifier of identifiers) {
@@ -34,6 +35,7 @@ const mountIssue = async (Plugin:LinearPlugin, el: HTMLElement | null, identifie
 		wrap.innerText = identifier;
 
 		html = html.replace(`[${identifier}]`, wrap.outerHTML)!;
+		// @ts-expect-error
 		el.setHTMLUnsafe(html);
 
 		// Ensure the element is ready
@@ -71,5 +73,5 @@ export default (Plugin:LinearPlugin) => async (element: HTMLElement | Node | nul
 		elm = el.parent;
 	}
 	
-	mountIssue(Plugin, elm as HTMLElement, IDs);
+	mountIssue(Plugin, elm as HTMLInputElement, IDs);
 }

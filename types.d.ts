@@ -7,6 +7,10 @@ type CommonProps = {
     className?: string;
 };
 
+interface IssueSchema extends IssueNode {
+  
+}
+
 type IssueNode = {
   id: string;
   identifier: string;
