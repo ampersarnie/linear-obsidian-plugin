@@ -3,9 +3,11 @@ import LinearPlugin from "main";
 import Title from "../Title";
 import Id from "../Id";
 import Status from "../Status";
+import { IssueSchema } from "../../../types";
 
 import "../../styles/inline.scss";
-import { IssueSchema } from "../../../types";
+import { useInterval } from "usehooks-ts";
+import { S_IN_MS } from "Utils/constants";
 
 type Props = {
     plugin: LinearPlugin;
@@ -20,6 +22,12 @@ export default ({plugin, identifier}: Props) => {
             setIssue(await issues[identifier]);
         });
     }, []);
+
+    useInterval(() => {
+        plugin.Linear.issuesFromIdentifiers([identifier], true).then(async (issues) => {
+            setIssue(await issues[identifier]);
+        });
+    }, 5 * S_IN_MS);
 
     if (!issue) {
         return (<span>Loading</span>);

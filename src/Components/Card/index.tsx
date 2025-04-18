@@ -7,6 +7,8 @@ import Assignee from "../Assignee";
 import { IssueSchema } from "../../../types";
 
 import "../../styles/card.scss";
+import { useInterval } from "usehooks-ts";
+import { S_IN_MS } from "Utils/constants";
 
 type Props = {
     plugin: LinearPlugin;
@@ -17,10 +19,16 @@ export default ({plugin, identifier}: Props) => {
     const [issue, setIssue] = useState<IssueSchema|null>(null);
 
     useEffect(() => {
-        plugin.Linear.issuesFromIdentifiers([identifier]).then(async (issues) => {
+        plugin.Linear.issuesFromIdentifiers([identifier], true).then(async (issues) => {
             setIssue(await issues[identifier]);
         });
     }, []);
+
+    useInterval(() => {
+        plugin.Linear.issuesFromIdentifiers([identifier], true).then(async (issues) => {
+            setIssue(await issues[identifier]);
+        });
+    }, 5 * S_IN_MS);
 
     if (!issue) {
         return (<span>Loading</span>);

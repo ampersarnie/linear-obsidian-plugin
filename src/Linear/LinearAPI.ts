@@ -1,5 +1,5 @@
 import { LinearClient, type LinearRawResponse } from "@linear/sdk";
-import IssueCache from "./IssueCache";
+import Cache from "./Cache";
 interface IssueInterface {
     [key: string]: any;
 }
@@ -20,7 +20,7 @@ export type IdentifierRegexMatch = RegExpMatchArray & {
 
 export default class LinearAPI {
     protected linear: LinearClient;
-    protected cache: IssueCache;
+    protected cache: Cache;
 
     protected nodeList = `
         id,
@@ -43,7 +43,7 @@ export default class LinearAPI {
 
     constructor(accessToken: string) {
         this.linear = new LinearClient({ accessToken: accessToken })
-        this.cache = new IssueCache();
+        this.cache = new Cache();
     }
 
     createTeamAndNumberList(identifiers: string[]): IssueList {
@@ -63,16 +63,20 @@ export default class LinearAPI {
         return issueList;
     }
 
-    async issuesFromIdentifiers(identifiers: string[]) {
+    async rehydrateIssues() {
+        const issues = await this.cache.expired();
+        const identifiers = issues.map(issue => issue.identifier);
+        this.issuesFromIdentifiers(identifiers);
+    }
+
+    async issuesFromIdentifiers(identifiers: string[], forceCache = false) {
         const issues: IssueInterface = {};
         const retrieve = [];
 
         for(let i in identifiers) {
             const identifier = identifiers[i];
 
-            console.log()
-
-            if (!await this.cache.exists(identifier)) {
+            if (!await this.cache.exists(identifier, forceCache)) {
                 retrieve.push(identifier);
                 continue;
             };

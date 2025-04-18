@@ -14,6 +14,7 @@ import cacheIssues from "Utils/cacheIssues"
 import { DOMRootNodes } from "../types";
 
 import "./styles/styles.scss"
+import Cache from "Linear/Cache";
 
 export default class LinearPlugin extends Plugin {
   	settings: PluginSettings;
@@ -64,8 +65,8 @@ export default class LinearPlugin extends Plugin {
 		this.registerMarkdownPostProcessor(markdownPostProcessor(this));
 	
 		this.registerInterval(window.setInterval(() => {
-	  		cacheIssues(this.app, this.Linear);
-		}, 20 * S_IN_MS, true));
+			this.Linear.rehydrateIssues();
+		}, 5 * S_IN_MS, true));
 
 		cacheIssues(this.app, this.Linear);
   	}
