@@ -1,9 +1,9 @@
 .linear-plugin--inline {
-    display: inline-block;
+    display: inline;
     background-color: var(--background-secondary);
     border-radius: 5px;
     border: 1px solid var(--background-modifier-border);
-    padding: 0 10px;
+    padding: 2px 10px;
     margin: 0 5px;
 
     &:hover {
@@ -12,7 +12,7 @@
     }
 
     .grid-item {
-        display: inline-block;
+        display: inline;
     }
 
     .linear-plugin--issue__id,
