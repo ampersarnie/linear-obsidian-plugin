@@ -87,7 +87,8 @@ export default class BlockDecoration implements PluginValue {
 
                     const eol = view.state.sliceDoc(node.from, node.to + 1);
 
-                    // Fix issue where last character triggers next() infinite loop.
+                    // Fix issue where last character triggers next() infinite loop
+                    // where `[` is the last chacter of a line.
                     if (eol.trimEnd() === '[') {
                         return;
                     }
