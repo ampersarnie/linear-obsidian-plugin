@@ -54,7 +54,3 @@ export default ({plugin, identifier}: Props) => {
         </div>
     );
 }
-
-function setState(arg0: null): [any, any] {
-    throw new Error("Function not implemented.");
-}
