@@ -50,3 +50,11 @@
 .cm-active .linear-code-element {
     display: inherit;
 }
+
+.markdown-source-view:not(.is-live-preview) .cm-linear {
+    display: none;
+}
+
+.markdown-source-view:not(.is-live-preview) .linear-code-element {
+    display: inherit;
+}
