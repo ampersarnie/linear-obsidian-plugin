@@ -1,9 +1,9 @@
-# Obsidian Linear.app Plugin
+# Obsidian Linear Plugin
 
 > [!WARNING]
 > This plugin is still in **Beta**, so issues may still occur. Use at your own risk - I am not be responsible for loss of content, or damaged vaults.
 
-An unofficial plugin for [Obsidian.md](http://obsidian.md) that allows you to embed your [Linear.app](https://linear.app) issues and tasks within an Obsidian document.
+An unofficial plugin for [Obsidian.md](http://obsidian.md) that allows you to embed your [Linear](https://linear.app) issues and tasks within an Obsidian document.
 
 ![](./screenshot.png)
 
