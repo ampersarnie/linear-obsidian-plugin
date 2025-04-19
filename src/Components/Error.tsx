@@ -1,9 +1,15 @@
 import React from "react";
 
-export default ({ content }) => {
+import "../styles/error.scss";
+
+type Props = {
+    content: string;
+}
+
+export default ({ content }: Props) => {
     return (
         <div className="linear-plugin--error">
-            {content}: Issue getting the issue.
+            {content}: There was a problem getting the issue.
         </div>
     )
 }
