@@ -9,6 +9,8 @@ An unofficial plugin for [Obsidian.md](http://obsidian.md) that allows you to em
 
 ## Quick Start
 
+Authenticate with Linear by going to `Obsidian` > `Settings` > `Linear` and click `Auth`. This will redirect you to Linear and allow you to authorise Obsidian to have access to your issues. Once approved, Linear will then reopen Obsidian.
+
 Issues and tasks can be added by referencing the identifier of an issue and including it in markup, like `[AMP-1]`.
 
 Mark up reacts in different ways depending on how you include it in your document. Current there are two types of presentation;
