@@ -14,12 +14,12 @@ jobs:
             - run: npm run build
             - name: Clean Up
               run: |
-                rm -rf node_modules src .github
+                rm -rf node_modules src .github .git
                 rm .gitignore .editorconfig .eslintignore .eslintrc .npmrc esbuild.config.mjs package-lock.json package.json tsconfig.json types.d.ts version-bump.mjs
             - name: Create Artifacts
               run: |
-                zip -r linear-obsidian-plugin.zip .
-                tar -czvf linear-obsidian-plugin.tar.gz .
+                zip -r ../linear-obsidian-plugin.zip .
+                tar -czvf ../linear-obsidian-plugin.tar.gz .
             - name: File List
               run: |
                 ls ./
@@ -27,7 +27,7 @@ jobs:
               uses: ncipollo/release-action@v1
               with:
                 allowUpdates: true
-                artifacts: "./linear-obsidian-plugin.*"
+                artifacts: "../linear-obsidian-plugin.*"
                 draft: true
                 name: "Draft Release"
                 replacesArtifacts: true
