@@ -6,7 +6,7 @@ import Settings from './Components/Settings';
 
 import { App, PluginSettingTab, Setting } from 'obsidian';
 
-export class ExampleSettingTab extends PluginSettingTab {
+export class SettingsTab extends PluginSettingTab {
 	plugin: LinearPlugin;
 
   	constructor(app: App, plugin: LinearPlugin) {
@@ -19,7 +19,7 @@ export class ExampleSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		const reactElement = React.createElement(Settings, {
-			settings: this.plugin.settings,
+			plugin: this.plugin
 		});
 
 		const root = ReactDOM.createRoot(containerEl);

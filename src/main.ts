@@ -1,7 +1,7 @@
 import { Plugin } from "obsidian";
 import { ViewPlugin } from '@codemirror/view';
 
-import { ExampleSettingTab } from './settings';
+import { SettingsTab } from './settings';
 import LinearAPI from "Linear/LinearAPI";
 import BlockDecoration from "Decorators/BlockDecoration";
 import TextDecoration from "Decorators/TextDecoration";
@@ -14,7 +14,6 @@ import cacheIssues from "Utils/cacheIssues"
 import { DOMRootNodes } from "../types";
 
 import "./styles/styles.scss"
-import Cache from "Linear/Cache";
 
 export default class LinearPlugin extends Plugin {
   	settings: PluginSettings;
@@ -23,7 +22,7 @@ export default class LinearPlugin extends Plugin {
 
   	async onload(): Promise<void> {
 		await this.loadSettings();
-		this.addSettingTab(new ExampleSettingTab(this.app, this));
+		this.addSettingTab(new SettingsTab(this.app, this));
 
 		if (this.settings.LinearToken?.access_token ) {
 	  		this.Linear = new LinearAPI(this.settings.LinearToken?.access_token)
@@ -65,7 +64,9 @@ export default class LinearPlugin extends Plugin {
 		this.registerMarkdownPostProcessor(markdownPostProcessor(this));
 	
 		this.registerInterval(window.setInterval(() => {
-			this.Linear.rehydrateIssues();
+			if (this.settings.allowRefresh) {
+				this.Linear.rehydrateIssues();
+			}
 		}, 5 * S_IN_MS, true));
 
 		cacheIssues(this.app, this.Linear);
@@ -75,7 +76,12 @@ export default class LinearPlugin extends Plugin {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
 
-	async saveSettings() {
-		await this.saveData(this.settings);
+	async saveSettings(settings: PluginSettings | null = null) {
+		if (settings) {
+			this.settings = settings;
+		}
+
+		await this.saveData(settings ?? this.settings);
+		await this.loadSettings();
   	}
 }
