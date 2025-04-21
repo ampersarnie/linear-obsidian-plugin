@@ -1,6 +1,6 @@
 {
 	"name": "linear",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "Display Linear issues and tasks in Obsidian.md",
 	"main": "main.js",
 	"scripts": {
