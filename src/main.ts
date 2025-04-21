@@ -8,7 +8,7 @@ import TextDecoration from "Decorators/TextDecoration";
 
 import LinearAuthentication from "ProtocolHandlers/LinearAuthentication";
 import markdownPostProcessor from "PostProcessors/markdownPostProcessor";
-import { DEFAULT_SETTINGS, PluginSettings, S_IN_MS } from "Utils/constants";
+import { DEFAULT_SETTINGS, INTERVAL, PluginSettings, S_IN_MS } from "Utils/constants";
 import cacheIssues from "Utils/cacheIssues"
 
 import { DOMRootNodes } from "../types";
@@ -67,7 +67,7 @@ export default class LinearPlugin extends Plugin {
 			if (this.settings.allowRefresh) {
 				this.Linear.rehydrateIssues();
 			}
-		}, 5 * S_IN_MS, true));
+		}, INTERVAL * S_IN_MS, true));
 
 		cacheIssues(this.app, this.Linear);
   	}

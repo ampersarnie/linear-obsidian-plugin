@@ -9,7 +9,7 @@ import { IssueSchema } from "../../../types";
 
 import "../../styles/card.scss";
 import { useInterval, useTimeout } from "usehooks-ts";
-import { S_IN_MS } from "Utils/constants";
+import { INTERVAL, S_IN_MS } from "Utils/constants";
 
 type Props = {
     plugin: LinearPlugin;
@@ -19,6 +19,10 @@ type Props = {
 export default ({plugin, identifier}: Props) => {
     const [issue, setIssue] = useState<IssueSchema|null>(null);
     const [timeout, setTimeout] = useState(false);
+
+    if (timeout) {
+        return (<Error content="Timeout" />);
+    }
 
     const getIssue = () => {
         plugin.Linear.issuesFromIdentifiers([identifier], true).then(async (issues) => {
@@ -35,11 +39,7 @@ export default ({plugin, identifier}: Props) => {
         if (!issue) {
             setTimeout(true);
         }
-    }, 15 * S_IN_MS);
-
-    if (timeout) {
-        return (<Error content="Timeout" />);
-    }
+    }, INTERVAL * S_IN_MS);
 
     if (!issue) {
         return (<span>Loading</span>);

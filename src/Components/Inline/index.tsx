@@ -8,7 +8,7 @@ import { IssueSchema } from "../../../types";
 
 import "../../styles/inline.scss";
 import { useInterval, useTimeout } from "usehooks-ts";
-import { S_IN_MS } from "Utils/constants";
+import { INTERVAL, S_IN_MS } from "Utils/constants";
 
 type Props = {
     plugin: LinearPlugin;
@@ -19,6 +19,10 @@ export default ({plugin, identifier}: Props) => {
     const [issue, setIssue] = useState<IssueSchema|null>(null);
     const [timeout, setTimeout] = useState(false);
 
+    if (timeout) {
+        return (<Error content="Timeout" />);
+    }
+
     const getIssue = () => {
         plugin.Linear.issuesFromIdentifiers([identifier], true).then(async (issues) => {
             setIssue(await issues[identifier]);
@@ -28,17 +32,13 @@ export default ({plugin, identifier}: Props) => {
 
     useEffect(getIssue, []);
 
-    useInterval(getIssue, 5 * S_IN_MS);
+    useInterval(getIssue, INTERVAL * S_IN_MS);
 
     useTimeout(() => {
         if (!issue) {
             setTimeout(true);
         }
     }, 1 * S_IN_MS);
-
-    if (timeout) {
-        return (<Error content="Timeout" />);
-    }
 
     if (!issue) {
         return (<span>Loading</span>);
