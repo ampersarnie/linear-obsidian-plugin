@@ -28,7 +28,7 @@ jobs:
               uses: ncipollo/release-action@v1
               with:
                 allowUpdates: true
-                artifacts: "../linear-obsidian-plugin.*,main.js,style.css,manifest.json"
+                artifacts: "../source.*,../built.*,main.js,styles.css,manifest.json"
                 draft: true
                 name: "Draft Release"
                 replacesArtifacts: true
