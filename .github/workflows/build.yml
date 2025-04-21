@@ -10,24 +10,25 @@ jobs:
         steps:
             - uses: actions/checkout@main
             - uses: actions/setup-node@v4
+            - name: Create Source Artifacts
+              run: |
+                zip -r ../source.zip .
+                tar -czvf ../source.tar.gz .
             - run: npm ci
             - run: npm run build
             - name: Clean Up
               run: |
                 rm -rf node_modules src .github .git
                 rm .gitignore .editorconfig .eslintignore .eslintrc .npmrc esbuild.config.mjs package-lock.json package.json tsconfig.json types.d.ts version-bump.mjs
-            - name: Create Artifacts
+            - name: Create Built Artifacts
               run: |
-                zip -r ../linear-obsidian-plugin.zip .
-                tar -czvf ../linear-obsidian-plugin.tar.gz .
-            - name: File List
-              run: |
-                ls ./
+                zip -r ../built.zip .
+                tar -czvf ../built.tar.gz .
             - name: Release Draft
               uses: ncipollo/release-action@v1
               with:
                 allowUpdates: true
-                artifacts: "../linear-obsidian-plugin.*"
+                artifacts: "../linear-obsidian-plugin.*,main.js,style.css,manifest.json"
                 draft: true
                 name: "Draft Release"
                 replacesArtifacts: true
