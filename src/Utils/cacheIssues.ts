@@ -1,13 +1,20 @@
 import LinearAPI from "Linear/LinearAPI";
 
-export default async (
+/**
+ * Get the current workspace and query all the issues found in the document.
+ * 
+ * @param {any} app - Instance of Obsidian.
+ * @param {LinearAPI} Linear - Instance of the Linear API class.
+ * @returns {void}
+ */
+const cacheIssues = async (
     app: any,
     Linear: LinearAPI
 ) => {
     const { data = null } = app.workspace?.activeEditor || {};
     
     if (!data) {
-        return [];
+        return;
     }
 
     const issueList: string[] = [];
@@ -22,3 +29,5 @@ export default async (
 
     await Linear.issuesFromIdentifiers(issueList);
 };
+
+export default cacheIssues;

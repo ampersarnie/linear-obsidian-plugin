@@ -4,7 +4,14 @@ export type FoundElement = {
     parent: Node|null;
 }[];
 
-export default (baseElement:HTMLElement|Node|null, pattern:RegExp): FoundElement => {
+/**
+ * Find the element where the provided pattern matches.
+ * 
+ * @param {HTMLElement|Node|null} baseElement - The element to use for the content check.
+ * @param {RegExp} pattern - The pattern to look for in the provided element/node.
+ * @returns {FoundElement}
+ */
+const findElementByText = (baseElement:HTMLElement|Node|null, pattern:RegExp): FoundElement => {
     let foundElement: FoundElement = [];
 
     if (!baseElement?.textContent || typeof baseElement?.textContent !== 'string') {
@@ -33,3 +40,5 @@ export default (baseElement:HTMLElement|Node|null, pattern:RegExp): FoundElement
 
     return foundElement;
 }
+
+export default findElementByText;

@@ -20,6 +20,9 @@ export default class LinearPlugin extends Plugin {
   	Linear: LinearAPI;
   	DOMRootNodes: DOMRootNodes = {};
 
+	/**
+	 * On plugin load register processors, decorators, protocol handlers.
+	 */
   	async onload(): Promise<void> {
 		await this.loadSettings();
 		this.addSettingTab(new SettingsTab(this.app, this));
@@ -72,10 +75,19 @@ export default class LinearPlugin extends Plugin {
 		cacheIssues(this.app, this.Linear);
   	}
 
+	/**
+	 * Load settings with any defaults.
+	 */
   	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
 
+	/**
+	 * Saves the settings from `this` if param not passed, otherwise the
+	 * param settings are saved.
+	 * 
+	 * @param {PluginSetting} settings - Object of settings to save.
+	 */
 	async saveSettings(settings: PluginSettings | null = null) {
 		if (settings) {
 			this.settings = settings;

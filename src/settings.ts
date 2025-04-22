@@ -14,6 +14,9 @@ export class SettingsTab extends PluginSettingTab {
 		this.plugin = plugin;
   	}
 
+	/**
+	 * Create the container and mount react component for settings.
+	 */
   	display(): void {
 		let { containerEl } = this;
 		containerEl.empty();
