@@ -38,9 +38,3 @@
         grid-area: assignee;
     }
 }
-
-@container (max-width: 400px) {
-    .linear-plugin--card {
-        display: block;
-    }
-}
