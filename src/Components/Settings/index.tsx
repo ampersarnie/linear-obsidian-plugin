@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import ApiKey from "./ApiKey";
 import Item from "./Item";
 import Toggle from "./Toggle";
 import LinearPlugin from "main";
@@ -19,47 +18,44 @@ const DEFAULT_USER = {
 };
 
 export default ({ plugin }: Props) => {
-    const [allowRefresh, setAllowRefresh] = useState(plugin.settings.allowRefresh);
-    const [apiKey, setApiKey] = useState(plugin.settings.apiKey);
-    const [keyReset, setKeyReset] = useState(false);
+    const [apiKeyValue, setApiKeyValue] = useState(plugin.settings.apiKey);
     const [user, setUser] = useState(DEFAULT_USER);
+    const [settings, setSettings] = useState(plugin.settings);
+
+    const resetSettings = async () => {
+        const defaults = await plugin.resetSettings();
+        setApiKeyValue('');
+        setSettings(defaults);
+        setUser(DEFAULT_USER);
+    }
 
     const updateSetting = (action:string) => async (e:any) => {
-        let value;
+        let value = e.target.value;
 
-        console.log(action)
-
-        switch(action) {
-            case 'allowRefresh':
-                setAllowRefresh((prev) => !prev);
-                value = e.target.checked;
-                break;
-            case 'apiKeyValue':
-                setApiKey(e.target.value);
-                break;
-            case 'apiKey':
-                value = apiKey;
-                if (!apiKey) setUser(DEFAULT_USER);
-                setKeyReset(!apiKey);
-                break;
-            default:
-                value = e.target.value;
-                break;
+        if (e.target.type === 'checkbox') {
+            value = e.target.checked;
         }
 
-        if (value) {
-            await plugin.saveSettings({
-                ...plugin.settings,
-                [action]: value,
-            });
+        if (action === 'apiKey') {
+            value = apiKeyValue;
         }
+
+        const updatedSettings = {
+            ...settings,
+            [action]: value
+        };
+
+        setSettings(updatedSettings);
+        plugin.saveSettings(updatedSettings);
     };
 
     useEffect(() => {
-        plugin.Linear.getCurrentUser().then((response) => {
-            setUser(response.data.viewer);
-        });
-    }, [apiKey]);
+        if (settings?.apiKey) { 
+            plugin.Linear.getCurrentUser().then((response) => {
+                setUser(response.data.viewer);
+            });
+        }
+    }, [settings]);
 
     // const assigneeName = name ?? 'Unassigned';
     const id = btoa(`${user.name}-settings`);
@@ -92,39 +88,35 @@ export default ({ plugin }: Props) => {
         <div>
             <h1>Linear Plugin</h1>
             <div className="linear-plugin--settings__user">
-                {/* @ts-expect-error */}
-                <ApiKey hasKey={!keyReset}>
-                    {/* @ts-expect-error */}
-                    <ApiKey.Active>
-                        {UserComponent}
-                        <div className="additional-context">
-                            <button onClick={() => setKeyReset(true)}>Change API Key</button>
+
+                {UserComponent}
+                <div className="setting-item">
+                    <div className="setting-item-info">
+                        <div className="setting-item-name">
+                            Linear Personal API Key
                         </div>
-                    </ApiKey.Active>
-                    {/* @ts-expect-error */}
-                    <ApiKey.Inactive>
-                        {UserComponent}
-                        <div className="api-key-input">
-                            <div className="setting-item-info">
-                                <div className="setting-item-name">
-                                    Linear Personal API Key
-                                </div>
-                                <div className="setting-item-description">
-                                    Your personal API Key is required to interact with Linear, this can be created on the <a href="https://linear.app/settings/account/security" target="_blank">Linear Security & Access</a> settings.
-                                </div>
-                            </div>
-                            <input type="password" spellCheck="false" placeholder="API Key" value={apiKey} onChange={updateSetting('apiKeyValue')} />
-                            <button onClick={updateSetting('apiKey')}>Save Key</button>
+                        <div className="setting-item-description">
+                            Your personal API Key is required to interact with Linear, this can be created on the <a href="https://linear.app/settings/account/security" target="_blank">Linear Security & Access</a> settings.
                         </div>
-                    </ApiKey.Inactive>
-                </ApiKey>
+                    </div>
+                    <div className="setting-item-control">
+                        <input type="password" spellCheck="false" placeholder="API Key" value={apiKeyValue} onChange={(e) => setApiKeyValue(e.target.value)} />
+                        <button onClick={updateSetting('apiKey')}>Save Key</button>
+                    </div>
+                </div>
             </div>
             <Item name="General" isHeading />
             <Item
                 name="Allow Background Refresh"
                 description="Allow the plugin to retrieve issues in the background at a regular interval."
             >
-                <Toggle checked={allowRefresh} onChange={updateSetting('allowRefresh')} />
+                <Toggle checked={settings.allowRefresh} onChange={updateSetting('allowRefresh')} />
+            </Item>
+            <Item
+                name="Reset All Settings"
+                description="Resets all settings back to their default."
+            >
+                <button onClick={resetSettings}>Reset</button>
             </Item>
         </div>
     );

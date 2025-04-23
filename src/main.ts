@@ -28,9 +28,7 @@ export default class LinearPlugin extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new SettingsTab(this.app, this));
 
-		if (this.settings.apiKey) {
-	  		this.Linear = new LinearAPI(this.settings.apiKey)
-		}
+		this.Linear = new LinearAPI(this.settings.apiKey)
 
 		this.app.workspace.on('editor-change', async () => {
 			// await cacheIssues(this.app, this.Linear);
@@ -97,4 +95,10 @@ export default class LinearPlugin extends Plugin {
 		await this.saveData(settings ?? this.settings);
 		await this.loadSettings();
   	}
+
+	async resetSettings() {
+		await this.saveData(DEFAULT_SETTINGS);
+		await this.loadSettings();
+		return this.settings;
+	}
 }

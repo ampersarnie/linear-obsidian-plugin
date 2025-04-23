@@ -2,11 +2,10 @@
     background-color: var(--background-secondary);
     border-radius: var(--callout-radius);
     padding: 10px 15px;
-    display: grid;
-    grid-template-areas:
-        "user-display api-key-input";
-    grid-gap: 20px;
-    grid-template-columns: 0.75fr 1fr;
+
+    .additional-context {
+        grid-area: context;
+    }
 
     .avatar {
         --background-avatar-default: var(--background-secondary-alt);
@@ -37,24 +36,7 @@
     }
 
     .api-key-input {
-        grid-area: api-key-input;
-        display: grid;
-        grid-template-areas:
-            "description description description"
-            "input input button";
-        grid-gap: 20px;
-
-        .setting-item-info {
-            grid-area: description;
-        }
-
-        input {
-            grid-area: input
-        }
-
-        button {
-            grid-area: button;
-        }
+        display: block;
     }
 
     button {

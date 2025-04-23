@@ -40,12 +40,16 @@ export default class LinearAPI {
 
     protected REGEX_IDENTIFIER = /(?<team>[A-Za-z]{1,7})-(?<number>[0-9]{1,7})/;
 
-    constructor(apiKey:string) {
+    constructor(apiKey:string = '') {
         this.apiKey = apiKey;
         this.cache = new Cache();
     }
 
     async fetch(query:string, variables: object) {
+        if (!this.apiKey) {
+            return Promise.reject(new Error('API Key has not been set.'))
+        }
+
         const response = await fetch(
             'https://api.linear.app/graphql',
             {
