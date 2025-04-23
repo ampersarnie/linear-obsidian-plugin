@@ -85,10 +85,9 @@ export default ({ plugin }: Props) => {
     );
     
     return (
-        <div>
+        <>
             <h1>Linear Plugin</h1>
             <div className="linear-plugin--settings__user">
-
                 {UserComponent}
                 <div className="setting-item">
                     <div className="setting-item-info">
@@ -118,6 +117,6 @@ export default ({ plugin }: Props) => {
             >
                 <button onClick={resetSettings}>Reset</button>
             </Item>
-        </div>
+        </>
     );
 }
