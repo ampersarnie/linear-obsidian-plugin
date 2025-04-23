@@ -19,8 +19,10 @@ const ApiKey = ({hasKey = false, apiKey = '', children}: Props) => {
     let Component;
 
     if (hasKey || apiKey.length > 0) {
+        // @ts-expect-error
         Component = children.filter(child => child?.type?.name === 'Active')[0];
     } else {
+        // @ts-expect-error
         Component = children.filter(child => child?.type?.name === 'Inactive')[0];
     }
     

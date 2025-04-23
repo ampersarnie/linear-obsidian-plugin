@@ -92,13 +92,16 @@ export default ({ plugin }: Props) => {
         <div>
             <h1>Linear Plugin</h1>
             <div className="linear-plugin--settings__user">
+                {/* @ts-expect-error */}
                 <ApiKey hasKey={!keyReset}>
+                    {/* @ts-expect-error */}
                     <ApiKey.Active>
                         {UserComponent}
                         <div className="additional-context">
                             <button onClick={() => setKeyReset(true)}>Change API Key</button>
                         </div>
                     </ApiKey.Active>
+                    {/* @ts-expect-error */}
                     <ApiKey.Inactive>
                         {UserComponent}
                         <div className="api-key-input">

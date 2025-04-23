@@ -1,6 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-const Inactive = ({children}) => {
+type Props = {
+    children: ReactNode[];
+}
+
+const Inactive = ({children}: Props) => {
     return children;
 }
 

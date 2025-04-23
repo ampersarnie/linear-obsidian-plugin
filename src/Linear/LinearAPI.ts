@@ -126,7 +126,7 @@ export default class LinearAPI {
 
         const { teams, numbers } = this.createTeamAndNumberList(retrieve);
 
-        const response: LinearRawResponse<any> = await this.fetch(`
+        const response = await this.fetch(`
             query issues($filter: IssueFilter) {
                 issues(filter: $filter) {
                     nodes { ${this.nodeList} },

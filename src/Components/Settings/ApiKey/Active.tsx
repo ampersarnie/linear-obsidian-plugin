@@ -1,6 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-const Active = ({children}) => {
+type Props = {
+    children: ReactNode[];
+}
+
+const Active = ({children}: Props) => {
     return children;
 }
 
