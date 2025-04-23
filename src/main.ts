@@ -24,15 +24,16 @@ export default class LinearPlugin extends Plugin {
 	 * On plugin load register processors, decorators, protocol handlers.
 	 */
   	async onload(): Promise<void> {
+		console.log('onload')
 		await this.loadSettings();
 		this.addSettingTab(new SettingsTab(this.app, this));
 
-		if (this.settings.LinearToken?.access_token ) {
-	  		this.Linear = new LinearAPI(this.settings.LinearToken?.access_token)
+		if (this.settings.apiKey) {
+	  		this.Linear = new LinearAPI(this.settings.apiKey)
 		}
 
 		this.app.workspace.on('editor-change', async () => {
-			await cacheIssues(this.app, this.Linear);
+			// await cacheIssues(this.app, this.Linear);
 	  	});
 
 		this.app.workspace.on('layout-change', async () => {

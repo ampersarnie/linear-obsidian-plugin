@@ -10,8 +10,8 @@ type Props = CommonProps & {
 export default ({ name, displayName, avatarUrl, className = '' }: Props) => {
     const classList = `linear-plugin--issue__assignee ${className}`;
 
-    const assigneeName = name ?? 'Unassigned';
     const urlFill = `url(#${btoa(name)})`;
+    const assigneeName = name ?? 'Unassigned';
 
     return (
         <div className={classList}>

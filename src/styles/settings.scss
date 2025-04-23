@@ -1,0 +1,63 @@
+.linear-plugin--settings__user {
+    background-color: var(--background-secondary);
+    border-radius: var(--callout-radius);
+    padding: 10px 15px;
+    display: grid;
+    grid-template-areas:
+        "user-display api-key-input";
+    grid-gap: 20px;
+    grid-template-columns: 0.75fr 1fr;
+
+    .avatar {
+        --background-avatar-default: var(--background-secondary-alt);
+    }
+
+    .user-display {
+        display: grid;
+        grid-area: user-display;
+        grid-template-areas: 
+            "avatar name"
+            "avatar email";
+        grid-template-columns: 1fr 4fr;
+        grid-template-rows: 20px;
+
+        .user-avatar {
+            grid-area: avatar;
+        }
+
+        .user-name {
+            grid-area: name;
+        }
+
+        .user-email {
+            grid-area: email;
+            font-size: small;
+            color: var(--text-faint)
+        }
+    }
+
+    .api-key-input {
+        grid-area: api-key-input;
+        display: grid;
+        grid-template-areas:
+            "description description description"
+            "input input button";
+        grid-gap: 20px;
+
+        .setting-item-info {
+            grid-area: description;
+        }
+
+        input {
+            grid-area: input
+        }
+
+        button {
+            grid-area: button;
+        }
+    }
+
+    button {
+        float: right;
+    }
+}

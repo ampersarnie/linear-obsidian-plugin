@@ -1,4 +1,3 @@
-import { LinearClient, type LinearRawResponse } from "@linear/sdk";
 import Cache from "./Cache";
 interface IssueInterface {
     [key: string]: any;
@@ -19,8 +18,8 @@ export type IdentifierRegexMatch = RegExpMatchArray & {
 }
 
 export default class LinearAPI {
-    protected linear: LinearClient;
     protected cache: Cache;
+    protected apiKey: string;
 
     protected nodeList = `
         id,
@@ -41,9 +40,45 @@ export default class LinearAPI {
 
     protected REGEX_IDENTIFIER = /(?<team>[A-Za-z]{1,7})-(?<number>[0-9]{1,7})/;
 
-    constructor(accessToken: string) {
-        this.linear = new LinearClient({ accessToken: accessToken })
+    constructor(apiKey:string) {
+        this.apiKey = apiKey;
         this.cache = new Cache();
+    }
+
+    async fetch(query:string, variables: object) {
+        const response = await fetch(
+            'https://api.linear.app/graphql',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.apiKey,
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    query: query,
+                    variables: variables,
+                }),
+            }
+        );
+
+        return await response.json();
+    }
+
+    getCurrentUser() {
+        return this.fetch(
+            `
+            query {
+                viewer {
+                    id
+                    name
+                    displayName
+                    avatarUrl
+                    email
+                }
+            }
+            `,
+            {}
+        );
     }
 
     createTeamAndNumberList(identifiers: string[]): IssueList {
@@ -91,7 +126,7 @@ export default class LinearAPI {
 
         const { teams, numbers } = this.createTeamAndNumberList(retrieve);
 
-        const response: LinearRawResponse<any> = await this.linear.client.rawRequest(`
+        const response: LinearRawResponse<any> = await this.fetch(`
             query issues($filter: IssueFilter) {
                 issues(filter: $filter) {
                     nodes { ${this.nodeList} },

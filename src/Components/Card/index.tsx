@@ -20,10 +20,6 @@ export default ({plugin, identifier}: Props) => {
     const [issue, setIssue] = useState<IssueSchema|null>(null);
     const [timeout, setTimeout] = useState(false);
 
-    if (timeout) {
-        return (<Error content="Timeout" />);
-    }
-
     const getIssue = () => {
         plugin.Linear.issuesFromIdentifiers([identifier], true).then(async (issues) => {
             setIssue(await issues[identifier]);
@@ -40,6 +36,10 @@ export default ({plugin, identifier}: Props) => {
             setTimeout(true);
         }
     }, INTERVAL * S_IN_MS);
+
+    if (timeout) {
+        return (<Error content="Timeout" />);
+    }
 
     if (!issue) {
         return (<span>Loading</span>);
