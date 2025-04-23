@@ -6,7 +6,7 @@ type Props = {
     onChange: ChangeEventHandler;
 }
 
-export default ({ checked, onChange: onChangeHandler}: Props) => {
+const Toggle = ({ checked, onChange: onChangeHandler}: Props) => {
     const classes = classNames({
         'checkbox-container': true,
         'is-enabled': checked
@@ -18,3 +18,5 @@ export default ({ checked, onChange: onChangeHandler}: Props) => {
         </div>
     );
 }
+
+export default Toggle;

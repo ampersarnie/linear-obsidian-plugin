@@ -6,11 +6,16 @@ type Props = {
     description?: string;
     isHeading?: boolean;
     children?: any;
+    isToggle?: boolean;
 }
 
-export default ({ name, description, isHeading = false, children }: Props) => {
+export default ({ name, description, isHeading = false, isToggle = false, children }: Props) => {
+    const items = Array.isArray(children) ? children : [children];
+    const hasToggle = Boolean(items.find(item => item?.type?.name === 'Toggle'));
+
     const itemClasses = classNames({
         'setting-item': true,
+        'mod-toggle': isToggle || hasToggle,
         'setting-item-heading': isHeading
     });
 

@@ -108,6 +108,7 @@ export default ({ plugin }: Props) => {
             <Item
                 name="Allow Background Refresh"
                 description="Allow the plugin to retrieve issues in the background at a regular interval."
+                isToggle
             >
                 <Toggle checked={settings.allowRefresh} onChange={updateSetting('allowRefresh')} />
             </Item>
