@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Item from "./Item";
 import Toggle from "./Toggle";
+import Button from "./Button";
 import LinearPlugin from "main";
 
 import "./../../styles/settings.scss";
@@ -95,12 +96,12 @@ export default ({ plugin }: Props) => {
                             Linear Personal API Key
                         </div>
                         <div className="setting-item-description">
-                            Your personal API Key is required to interact with Linear, this can be created on the <a href="https://linear.app/settings/account/security" target="_blank">Linear Security & Access</a> settings.
+                            Your personal API Key is required to interact with Linear, this can be created via <a href="https://linear.app/settings/account/security" target="_blank">Linear Security & Access</a> settings.
                         </div>
                     </div>
                     <div className="setting-item-control">
                         <input type="password" spellCheck="false" placeholder="API Key" value={apiKeyValue} onChange={(e) => setApiKeyValue(e.target.value)} />
-                        <button onClick={updateSetting('apiKey')}>Save Key</button>
+                        <Button onClick={updateSetting('apiKey')}>Save Key</Button>
                     </div>
                 </div>
             </div>
@@ -116,7 +117,7 @@ export default ({ plugin }: Props) => {
                 name="Reset All Settings"
                 description="Resets all settings back to their default."
             >
-                <button onClick={resetSettings}>Reset</button>
+                <Button onClick={resetSettings} isWarning>Reset</Button>
             </Item>
         </>
     );
