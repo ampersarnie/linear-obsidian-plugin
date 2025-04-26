@@ -17,8 +17,19 @@
         grid-template-areas: 
             "avatar name"
             "avatar email";
-        grid-template-columns: 1fr 4fr;
+        grid-template-columns: 0.4fr 4fr;
         grid-template-rows: 20px;
+
+        .user-display-error {
+            grid-area: name;
+            background-color: var(--background-modifier-error);
+            --text-color: var(--text-on-accent);
+            border-radius: var(--button-radius);
+            border: 0;
+            padding: var(--size-4-1) var(--size-4-3) 0 var(--size-4-3);
+            height: var(--input-height);
+            font-weight: var(--input-font-weight);
+        }
 
         .user-avatar {
             grid-area: avatar;

@@ -22,6 +22,7 @@ export default ({ plugin }: Props) => {
     const [apiKeyValue, setApiKeyValue] = useState(plugin.settings.apiKey);
     const [user, setUser] = useState(DEFAULT_USER);
     const [settings, setSettings] = useState(plugin.settings);
+    const [error, setError] = useState('');
 
     const resetSettings = async () => {
         const defaults = await plugin.resetSettings();
@@ -54,6 +55,9 @@ export default ({ plugin }: Props) => {
         if (settings?.apiKey) { 
             plugin.Linear.getCurrentUser().then((response) => {
                 setUser(response.data.viewer);
+            }).catch(() => {
+                setUser(DEFAULT_USER);
+                setError('Could not retrieve user. Are you sure your API Key is correct?');
             });
         }
     }, [settings]);
@@ -82,6 +86,11 @@ export default ({ plugin }: Props) => {
             <div className="user-email">
                 {user.email}
             </div>
+            {error && (
+                <div className="user-display-error">
+                    {error}
+                </div>
+            )}
         </div>
     );
     
