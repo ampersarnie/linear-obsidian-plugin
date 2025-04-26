@@ -79,6 +79,7 @@ export default class LinearPlugin extends Plugin {
 	 */
   	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.Linear = new LinearAPI(this.settings.apiKey); // Reinstantiate incase apiKey changes.
 	}
 
 	/**

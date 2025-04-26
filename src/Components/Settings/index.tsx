@@ -52,7 +52,8 @@ export default ({ plugin }: Props) => {
     };
 
     useEffect(() => {
-        if (settings?.apiKey) { 
+        if (settings?.apiKey) {
+            plugin.Linear.setApiKey(settings.apiKey);
             plugin.Linear.getCurrentUser().then((response) => {
                 setUser(response.data.viewer);
             }).catch(() => {

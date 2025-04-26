@@ -45,6 +45,10 @@ export default class LinearAPI {
         this.cache = new Cache();
     }
 
+    setApiKey(apiKey: string): void {
+        this.apiKey = apiKey;
+    }
+
     async fetch(query:string, variables: object) {
         if (!this.apiKey) {
             return Promise.reject(new Error('API Key has not been set.'))
