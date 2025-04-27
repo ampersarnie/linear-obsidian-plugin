@@ -26,6 +26,7 @@ export default class LinearPlugin extends Plugin {
 	 * On plugin load register processors, decorators, protocol handlers.
 	 */
   	async onload(): Promise<void> {
+		// @ts-expect-error
 		CacheHash = this.app.appId;
 		await this.loadSettings();
 		this.addSettingTab(new SettingsTab(this.app, this));

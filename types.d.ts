@@ -40,3 +40,7 @@ interface WidgetSpec extends PluginValue {
   Plugin: LinearPlugin;
   Cache: Cache;
 }
+
+declare global {
+  var CacheHash: string;
+}
