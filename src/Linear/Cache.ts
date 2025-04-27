@@ -1,4 +1,5 @@
 import { openDB } from "idb";
+import { Plugin } from "obsidian";
 import { S_IN_MS } from "Utils/constants";
 
 interface CacheInterface {
@@ -15,7 +16,7 @@ class Cache {
     onAdd: CacheInterface = {};
 
     private async db() {
-        return openDB(this.DATABASE_NAME, 1, {
+        return openDB(this.DATABASE_NAME + `/${CacheHash}`, 1, {
             upgrade(db) {
                 // Create a store of objects
                 const store = db.createObjectStore(CacheTables.Issues, {

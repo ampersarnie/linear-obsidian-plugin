@@ -103,6 +103,9 @@ export default class LinearAPI {
             issueList.numbers.push(parseInt(number));
         }
 
+        issueList.teams = [...new Set(issueList.teams)];
+        issueList.numbers = [...new Set(issueList.numbers)];
+
         return issueList;
     }
 

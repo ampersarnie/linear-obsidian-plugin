@@ -13,7 +13,9 @@ import cacheIssues from "Utils/cacheIssues"
 
 import { DOMRootNodes } from "../types";
 
-import "./styles/styles.scss"
+import "./styles/styles.scss";
+
+window.CacheHash = '';
 
 export default class LinearPlugin extends Plugin {
   	settings: PluginSettings;
@@ -24,7 +26,7 @@ export default class LinearPlugin extends Plugin {
 	 * On plugin load register processors, decorators, protocol handlers.
 	 */
   	async onload(): Promise<void> {
-		console.log('onload')
+		CacheHash = this.app.appId;
 		await this.loadSettings();
 		this.addSettingTab(new SettingsTab(this.app, this));
 
