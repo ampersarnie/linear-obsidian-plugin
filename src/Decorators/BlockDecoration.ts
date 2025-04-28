@@ -98,8 +98,10 @@ export default class BlockDecoration implements PluginValue {
                     // @ts-expect-error
                     node.next();
 
-                    const issueMarkup = view.state.sliceDoc(node.from - 1, node.to + 1);
-                    const issue = issueMarkup.match(/\[([A-Za-z]{1,7}-[0-9]{1,7})\]/);
+                    // We +2 on node.to to ensure we catch additional markup that may indicate a different
+                    // type of link - e.g last character of "(" would be a []() markdown link.
+                    const issueMarkup = view.state.sliceDoc(node.from - 1, node.to + 2);
+                    const issue = issueMarkup.trim().match(/^\[([A-Za-z]{1,7}-[0-9]{1,7})\]$/);
 
                     if (!/\[[A-Za-z]{1,7}-[0-9]{1,7}\]/.test(issueMarkup) || !issue?.[1]) {
 						// @ts-expect-error

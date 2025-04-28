@@ -51,9 +51,11 @@ export default class TextDecoration implements PluginValue {
                     // @ts-expect-error
                     node.next();
 
-                    const issue = view.state.sliceDoc(node.from - 1, node.to + 1);
+                    // We +2 on node.to to ensure we catch additional markup that may indicate a different
+                    // type of link - e.g last character of "(" would be a []() markdown link.
+                    const issue = view.state.sliceDoc(node.from - 1, node.to + 2);
 
-                    if (!/\[[A-Za-z]{1,7}-[0-9]{1,7}\]/.test(issue)) {
+                    if (!/^\[([A-Za-z]{1,7}-[0-9]{1,7})\]$/.test(issue.trim())) {
 						// @ts-expect-error
 						node.prev();
                         return;
