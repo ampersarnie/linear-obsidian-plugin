@@ -24,9 +24,16 @@ Right now it is only possible to install this plugin manually, once I am sure of
 5. Create the folder `linear-obsidian-plugin`.
 6. Move the 3 downloaded files in the folder `linear-obsidian-plugin`.
 
+Alternatively you can use [BRAT](https://github.com/TfTHacker/obsidian42-brat/tree/main) to install.
+
 ## Quick Start
 
-Authenticate with Linear by going to `Obsidian` > `Settings` > `Linear` and click `Auth`. This will redirect you to Linear and allow you to authorise Obsidian to have access to your issues. Once approved, Linear will then reopen Obsidian.
+Once the plugin is enabled, you will need to allow the plugin to be able to access your Linear issues, to do this you will want to...
+
+1. Create a [Personal API Key](https://linear.app/settings/account/security) via Linear Security & Access settings, then...
+2. add this to the Obsidian plugin by navigating to `Obsidian` > `Settings` > `Linear` and adding your key to the `Linear Personal API Key` section.
+
+---
 
 Issues and tasks can be added by referencing the identifier of an issue and including it in markup, like `[AMP-1]`.
 
