@@ -4,6 +4,7 @@ import Title from "../Title";
 import Id from "../Id";
 import Status from "../Status";
 import Assignee from "../Assignee";
+import Labels from "../Labels";
 import Error from "../Error";
 import { IssueSchema } from "../../../types";
 
@@ -51,6 +52,7 @@ export default ({plugin, identifier}: Props) => {
             <Id className="grid-item">{issue?.identifier}</Id>
             <Title className="grid-item">{issue?.title}</Title>
             <Assignee className="grid-item" name={issue.assignee?.name} avatarUrl={issue.assignee?.avatarUrl} />
+            <Labels className="grid-item" labels={issue.labels.nodes} />
         </div>
     );
 }

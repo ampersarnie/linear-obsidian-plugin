@@ -34,6 +34,34 @@
     }
 }
 
+.linear-plugin--issue__labels {
+    grid-area: labels;
+    text-align: end;
+}
+
+.linear-plugin--issue__label {
+    border-radius: 10px;
+    border: 1px solid var(--background-modifier-border);
+    background-color: var(--color-base-10);
+    display: inline-block;
+    font-size: var(--font-smallest);
+    padding: 0 6px;
+
+    &:before {
+        background-color: var(--linear-label-color);
+        border-radius: 10px;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        content: "";
+        margin-right: 5px;
+    }
+}
+
+.linear-plugin--issue__label:not(:last-child) {
+    margin-right: 10px;
+}
+
 .cm-linear[data-linear-inline="true"] {
     display: inline;
 }
