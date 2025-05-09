@@ -1,0 +1,21 @@
+name: Linear Obsidian Build
+run-name: ${{ github.actor }} is running.
+on:
+    pull_request:
+        branches:
+            - release/**
+            - feature/**
+            - hotfix/**
+            - main
+jobs: 
+    release-draft:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@main
+            - uses: actions/setup-node@v4
+            - name: Create Source Artifacts
+              run: |
+                zip -r ../source.zip .
+                tar -czvf ../source.tar.gz .
+            - run: npm ci
+            - run: npm run build
