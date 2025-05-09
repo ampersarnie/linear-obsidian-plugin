@@ -1,7 +1,7 @@
 {
 	"id": "linear-issues",
 	"name": "Linear Issues",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"minAppVersion": "0.15.0",
 	"description": "Display Linear issues and tasks in Obsidian.md",
 	"author": "Paul Taylor <paul.taylor@hey.com>",
