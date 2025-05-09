@@ -28,6 +28,7 @@ export default class LinearAPI {
         url,
         labels {
             nodes {
+                id,
                 name,
                 color
             }
