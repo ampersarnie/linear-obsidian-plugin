@@ -1,9 +1,10 @@
 import React from "react";
 import { CommonProps } from "../../types";
+import { HexColor } from "types/colors";
 
 type Props = CommonProps & {
     name: string;
-    color: string;
+    color: HexColor<string>;
 };
 
 export default ({name, color, className}: Props) => {

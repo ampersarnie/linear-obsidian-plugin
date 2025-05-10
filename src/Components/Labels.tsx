@@ -10,7 +10,7 @@ export default ({labels, className = ''}: Props) => {
     const classList = `linear-plugin--issue__labels ${className}`;
 
     if (!Array.isArray(labels) || labels.length <= 0) {
-        return;
+        return null;
     }
     
     return (

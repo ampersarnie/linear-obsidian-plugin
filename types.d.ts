@@ -17,15 +17,15 @@ type IssueNode = {
   identifier: string;
   title: string;
   url: string;
-  labels?: {
+  labels: {
     nodes: Labels[]
   },
-  state?: {
+  state: {
       color: HexColor<string>;
       name: string;
       type: string;
   }
-  assignee?: {
+  assignee: {
     name: string;
     displayName: string;
     avatarUrl: string;
