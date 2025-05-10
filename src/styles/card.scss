@@ -11,7 +11,7 @@
     grid-template-areas:
         "status . id"
         "title title title"
-        "assignee . .";
+        "assignee labels labels";
 
     &:hover {
         border-color: var(--background-modifier-border-hover);

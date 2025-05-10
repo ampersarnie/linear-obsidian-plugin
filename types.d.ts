@@ -1,6 +1,7 @@
 import { type MarkdownFileInfo } from "obsidian";
 import { PluginValue } from '@codemirror/view';
 import LinearPlugin from "main";
+import { HexColor } from "types/colors";
 
 type CommonProps = {
     children?: any;
@@ -16,8 +17,11 @@ type IssueNode = {
   identifier: string;
   title: string;
   url: string;
+  labels: {
+    nodes: Labels[]
+  },
   state: {
-      color: string;
+      color: HexColor<string>;
       name: string;
       type: string;
   }
@@ -26,6 +30,12 @@ type IssueNode = {
     displayName: string;
     avatarUrl: string;
   }
+}
+
+type Labels = {
+  id: string;
+  name: string;
+  color: HexColor<string>;
 }
 
 interface DOMRootNodes {

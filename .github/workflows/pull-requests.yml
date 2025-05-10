@@ -1,4 +1,4 @@
-name: Linear Obsidian Build
+name: Linear Obsidian Pull Request
 run-name: ${{ github.actor }} is running.
 on:
     pull_request:
@@ -8,7 +8,7 @@ on:
             - hotfix/**
             - main
 jobs: 
-    release-draft:
+    pull_request:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@main

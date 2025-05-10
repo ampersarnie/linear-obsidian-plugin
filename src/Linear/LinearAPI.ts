@@ -26,6 +26,13 @@ export default class LinearAPI {
         identifier,
         title,
         url,
+        labels {
+            nodes {
+                id,
+                name,
+                color
+            }
+        },
         assignee {
             name,
             displayName,
